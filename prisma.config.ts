@@ -8,6 +8,6 @@ export default defineConfig({
   },
   datasource: {
     // ใช้ .env -> DATABASE_URL="file:./dev.db" (ไฟล์อยู่ที่รากโปรเจค)
-    url: process.env.DATABASE_URL ?? "file:./dev.db",
+    url: process.env.DATABASE_URL ?? "file:./prisma/dev.db",
   },
 });

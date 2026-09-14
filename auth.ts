@@ -49,10 +49,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       : []),
   ],
   callbacks: {
-    jwt({ token, user }) {
-      if (user) token.id = (user as { id: string }).id;
-      return token;
-    },
+     jwt({ token, user, trigger, session }) {
+        if (user) {
+          token.id = (user as { id: string }).id;
+          // เพิ่มรูปด้วย
+          if (user.image) token.picture = user.image;
+        }
+        // กรณี update session
+        if (trigger === "update" && session?.user?.image) {
+          token.picture = session.user.image;
+        }
+        return token;
+      },
     session({ session, token }) {
       if (token?.id && session.user) {
         (session.user as { id: string }).id = token.id as string;
